@@ -6,6 +6,7 @@ import { useTasks } from "../context/tasksContext";
 const Layout = ({ children }) => {
   const router = useRouter();
   const { tasks } = useTasks();
+
   return (
     <div className="h-screen bg-gray-900 ">
       <header className="flex bg-gray-800 text-white px-10 py-5 items-center">
@@ -30,7 +31,7 @@ const Layout = ({ children }) => {
           </button>
         </div>
       </header>
-      <main className="px-28">{children} </main>
+      <main className="px-28 py-10">{children} </main>
     </div>
   );
 };

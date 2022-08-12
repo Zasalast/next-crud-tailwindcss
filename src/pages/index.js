@@ -22,7 +22,26 @@ function Home() {
         <meta name="description" content="list task" />
       </Head>
       <Layout>
-        <pre>{tasks.task}</pre>
+        <div className="justify-center flex">
+          {tasks.length === 0 ? (
+            <div className="bg-slate-100">no hay tareas</div>
+          ) : (
+            <div className="w-7/12">
+              {tasks.map((task, i) => (
+                <>
+                  <span>{i} </span>
+                  <div className="bg-slate-100 hover:bg-gray-100 cursor-pointer px-20 py-5 m-2">
+                    {" "}
+                    <div className="">
+                      <span className="bg-slate-100">{task.title}</span>
+                      <span> {task.description} </span>
+                    </div>
+                  </div>
+                </>
+              ))}
+            </div>
+          )}
+        </div>
       </Layout>
       <Image
         src="/pexels.jpg"

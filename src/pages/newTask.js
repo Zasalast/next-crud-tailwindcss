@@ -8,7 +8,8 @@ const inititalState = {
   description: "",
 };
 const NewTask = () => {
-  const { tasks } = useTasks();
+  const { push } = useRouter();
+  const { tasks, createTask } = useTasks();
   const [task, setTask] = useState(inititalState);
   console.log(tasks);
   const {
@@ -17,7 +18,10 @@ const NewTask = () => {
     formState: { errors },
   } = useForm();
   const customSubmit = (data) => {
+    /*  e.preventDefault(); */
     console.log(data);
+    createTask(data.title, data.description);
+    push("/");
   };
   return (
     <Layout>
@@ -62,7 +66,7 @@ const NewTask = () => {
         <button
           type="submit"
           className="font-bold text-white bg-blue-600 hover:bg-green-400 px-4 py-2 rounded-sm disabled:opacity-30"
-          disabled={!task.title}
+          /*   disabled={!task.title} */
         >
           Save
         </button>
