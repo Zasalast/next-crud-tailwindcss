@@ -7,7 +7,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { VscTrash, VscTasklist } from "react-icons/vsc";
 function Home() {
-  const { tasks } = useTasks();
+  const { tasks, deleteTask } = useTasks();
   const { push } = useRouter();
   console.log(tasks);
   const {
@@ -60,6 +60,7 @@ function Home() {
                         onClick={(e) => {
                           e.stopPropagation();
                           console.log(task.id);
+                          deleteTask(task.id);
                         }}
                       >
                         {" "}
