@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import { useForm } from "react-hook-form";
+import { useForm, controller } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useTasks } from "../context/tasksContext";
 const inititalState = {
@@ -8,24 +8,37 @@ const inititalState = {
   description: "",
 };
 const NewTask = () => {
-  const { push } = useRouter();
-  const { tasks, createTask } = useTasks();
+  const { push, query } = useRouter();
+  const { tasks, createTask, updateTask } = useTasks();
   const [task, setTask] = useState(inititalState);
-  console.log(tasks);
   const {
     register,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const customSubmit = (data) => {
     /*  e.preventDefault(); */
-    console.log(data);
-    createTask(data.title, data.description);
+    if (!query.id) {
+      console.log(data);
+      createTask(data.title, data.description);
+    } else {
+      updateTask(query.id, data);
+    }
     push("/");
   };
+
+  useEffect(() => {
+    if (query.id) {
+      const taskFound = tasks.find((task) => task.id === query.id);
+      setTask({ title: taskFound.title, description: taskFound.description });
+      console.log("hola mund");
+    }
+  }, []);
+
   return (
     <Layout>
-      {" "}
+      <h1>{query.id ? "Update a task" : "Create a Task"} </h1>
       <form className="form-react" onSubmit={handleSubmit(customSubmit)}>
         {" "}
         <div className="form-control">
@@ -36,7 +49,7 @@ const NewTask = () => {
             className="w-full py-3 px-4 mb-5 font-black bg-slate-900"
             type="text"
             placeholder="Write a title"
-            autoFocus
+            defaultValue={task.title}
             {...register("title", { required: true, min: 4, maxLength: 50 })}
           />
           {errors.title?.type === "required" && (
@@ -50,6 +63,7 @@ const NewTask = () => {
           <label className="text-white">Description</label>
           <div>
             <textarea
+              defaultValue={task.description}
               placeholder="Write a Description"
               className="w-full py-3 px-4 mb-5   "
               {...register("description", {

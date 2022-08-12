@@ -1,5 +1,5 @@
 import React from "react";
-/* import { BsFillPlusCircleFill } from "react-icons/bs"; */
+import { BsFillPlusCircleFill } from "react-icons/bs";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTasks } from "../context/tasksContext";
@@ -8,10 +8,10 @@ const Layout = ({ children }) => {
   const { tasks } = useTasks();
 
   return (
-    <div className="h-screen bg-gray-900 ">
-      <header className="flex bg-gray-800 text-white px-10 py-5 items-center">
+    <div className="h-screen bg-gray-500 text-white">
+      <header className="flex bg-gray-800  px-10 py-5 items-center">
         <Link href="/">
-          <a className="text-white">
+          <a>
             <h1 className="font-black text-lg px-4  ">Task List</h1>
           </a>
         </Link>
@@ -27,11 +27,11 @@ const Layout = ({ children }) => {
           "
             onClick={() => router.push("/newTask")}
           >
-            {/* <BsFillPlusCircleFill className="mr-2" /> */} New Task
+            <BsFillPlusCircleFill className="mr-2" /> New Task
           </button>
         </div>
       </header>
-      <main className="px-28 py-10">{children} </main>
+      <main className="h-5/6 px-28 py-10">{children} </main>
     </div>
   );
 };
